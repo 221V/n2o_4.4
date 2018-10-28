@@ -31,7 +31,7 @@ info({cookie, _Operation, _Key, _Value}= _Message, Req, State)    -> {reply, <<"
 info({wire, _Parameter}= _Message, Req, State)                    -> {reply, <<"OK">>, Req, State};
 info({update, _Target, _Elements}= _Message, Req, State)          -> {reply, <<"OK">>, Req, State};
 info({insert_top, _Target, _Elements}= _Message, Req, State)      -> {reply, <<"OK">>, Req, State};
-info({insert_bottom, _Target, _Elements}= _Message, _Req, _State) -> {reply, <<"OK">>, Req, State};
+info({insert_bottom, _Target, _Elements}= _Message, Req, State)   -> {reply, <<"OK">>, Req, State};
 
 % ASYNC protocol
 info({start, _Handler}= _Message, Req, State)         -> {reply, <<"OK">>, Req, State};
