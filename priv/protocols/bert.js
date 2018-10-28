@@ -16,7 +16,9 @@ function list()    { return {t:108,v:Array.apply(null,arguments)}; }
 function number(o) { return {t:98,v:o}; }
 function enc(o)    { return fl([131,ein(o)]); }
 function ein(o)    { return Array.isArray(o)?en_108({t:108,v:o}):eval('en_'+o.t)(o); }
-function en_undefined(o) { return [106]; }
+function en_undefined(o) { 
+  //console.log("from bert.js:20 ",o);
+  return [106]; }
 function en_98(o)  { return [98,o.v>>>24,(o.v>>>16)&255,(o.v>>>8)&255,o.v&255]; }
 function en_97(o)  { return [97,o.v];}
 function en_106(o) { return [106];}

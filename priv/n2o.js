@@ -25,7 +25,9 @@ function co(name) { match=document.cookie.match(new RegExp(name+'=([^;]+)')); re
 /// N2O Protocols
 
 var $io = {}; $io.on = function onio(r, cb) { if (is(r,3,'io')) {
-    try { eval(utf8_dec(r.v[1].v)); if (typeof cb == 'function') cb(r); return { status: "ok" }; }
+    try { 
+      //console.log("from n2o.js:29 ", utf8_dec(r.v[1].v));
+      eval(utf8_dec(r.v[1].v)); if (typeof cb == 'function') cb(r); return { status: "ok" }; }
     catch (e) { console.log(e); return { status: '' }; } } else return { status: '' }; }
 
 var $file = {}; $file.on = function onfile(r, cb) { if (is(r,10,'ftp')) {
