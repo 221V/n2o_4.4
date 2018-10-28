@@ -2,7 +2,7 @@
 -author('Andrii Zadorozhnii').
 -include_lib("n2o/include/wf.hrl").
 -include_lib("kernel/include/file.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 -define(ROOT, wf:config(n2o,upload,code:priv_dir(n2o))).
 -define(NEXT, 256*1024). % 256K chunks for best 25MB/s speed
@@ -21,7 +21,7 @@ info(#ftp{status={event,_}}=FTP, Req, State) ->
           catch E:R -> Error=wf:stack(E,R), wf:error(?MODULE,"Catch: ~p:~p~n~p",Error), Error end,
     {reply,wf:format({io,n2o_nitrogen:render_actions(wf:actions()),Reply}),Req,State};
 
-info(#ftp{id=Link,sid=Sid,filename=FileName,status= <<"init">>,block=Block,offset=Offset,size=TotalSize}=FTP,Req,State) ->
+info(#ftp{id=Link,sid= _Sid,filename= _FileName,status= <<"init">>,block=Block,offset=Offset,size= _TotalSize}=FTP,Req,State) ->
     Root=?ROOT,
     RelPath=(wf:config(n2o,filename,n2o_file)):filename(FTP),
     FilePath=filename:join(Root,RelPath),
@@ -40,10 +40,10 @@ info(#ftp{id=Link,sid=Sid,filename=FileName,status= <<"init">>,block=Block,offse
 
     {reply,wf:format(FTP2),Req,State};
 
-info(#ftp{id=Link,sid=Sid,filename=FileName,status= <<"send">>}=FTP,Req,State) ->
+info(#ftp{id=Link,sid= _Sid,filename= _FileName,status= <<"send">>}=FTP,Req,State) ->
     wf:info(?MODULE,"Info Send: ~p",[FTP#ftp{data= <<>>}]),
     Reply=try gen_server:call(n2o_async:pid({file,Link}),FTP)
-        catch E:R -> wf:error(?MODULE,"Info Error call the sync: ~p~n",[FTP#ftp{data= <<>>}]),
+        catch _E:_R -> wf:error(?MODULE,"Info Error call the sync: ~p~n",[FTP#ftp{data= <<>>}]),
             FTP#ftp{data= <<>>,block=?STOP} end,
     wf:info(?MODULE,"reply ~p",[Reply#ftp{data= <<>>}]),
     {reply,wf:format(Reply),Req,State};
@@ -62,8 +62,8 @@ proc(init,#handler{state=#ftp{sid=Sid}=FTP}=Async) ->
     wf:send(Sid,FTP#ftp{data= <<>>,status={event,init}}),
     {ok,Async};
 
-proc(#ftp{id=Link,sid=Sid,data=Data,filename=FileName,status= <<"send">>,block=Block}=FTP,
-     #handler{state=#ftp{data=State,size=TotalSize,offset=Offset,filename=RelPath}}=Async) when Offset+Block >= TotalSize ->
+proc(#ftp{id=Link,sid=Sid,data=Data,filename= _FileName,status= <<"send">>,block=Block}=FTP,
+     #handler{state=#ftp{data= _State,size=TotalSize,offset=Offset,filename=RelPath}}=Async) when Offset+Block >= TotalSize ->
 	wf:info(?MODULE,"Proc Stop ~p, last piece size: ~p", [FTP#ftp{data= <<>>},byte_size(Data)]),
 	case file:write_file(filename:join(?ROOT,RelPath),<<Data/binary>>,[append,raw]) of
 		{error,Reason} -> {reply,{error,Reason},Async};
@@ -73,8 +73,8 @@ proc(#ftp{id=Link,sid=Sid,data=Data,filename=FileName,status= <<"send">>,block=B
 			spawn(fun() -> n2o_async:stop(file,Link) end),
 			{stop,normal,FTP2,Async#handler{state=FTP2}} end;
 
-proc(#ftp{sid=Sid,data=Data,block=Block}=FTP,
-     #handler{state=#ftp{data=State,offset=Offset,filename=RelPath}}=Async) ->
+proc(#ftp{sid= _Sid,data=Data,block=Block}=FTP,
+     #handler{state=#ftp{data= _State,offset=Offset,filename=RelPath}}=Async) ->
     FTP2=FTP#ftp{status= <<"send">>,offset=Offset+Block },
     wf:info(?MODULE,"Proc Process ~p",[FTP2#ftp{data= <<>>}]),
     case file:write_file(filename:join(?ROOT,RelPath),<<Data/binary>>,[append,raw]) of

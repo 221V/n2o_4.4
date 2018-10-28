@@ -2,7 +2,7 @@
 -description('N2O Process Context').
 -author('Rusty Klophaus').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 actions() -> get(actions).
 actions(Ac) -> put(actions,Ac).

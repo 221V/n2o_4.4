@@ -1,7 +1,7 @@
 -module(wf_utils).
 -author('Rusty Klophaus').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 f(S) -> f(S, []).
 f(S, Args) -> lists:flatten(io_lib:format(S, Args)).
@@ -14,7 +14,7 @@ replace(String, S1, S2) when is_list(String), is_list(S1), is_list(S2) ->
         _ -> [hd(String)|replace(tl(String), S1, S2)]
     end.
 
-coalesce({X,Y}) -> Y;
+coalesce({_X,Y}) -> Y;
 coalesce(false) -> undefined;
 coalesce([]) -> undefined;
 coalesce([H]) -> H;

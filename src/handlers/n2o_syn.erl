@@ -4,7 +4,7 @@
 
 send(Pool, Message) -> syn:publish(term_to_binary(Pool),Message).
 reg(Pool) -> reg(Pool,undefined).
-reg(Pool, Value) ->
+reg(Pool, _Value) ->
     case get({pool,Pool}) of
          undefined -> syn:join(term_to_binary(Pool),self()),
                       put({pool,Pool},Pool);

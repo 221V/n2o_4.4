@@ -1,7 +1,7 @@
 -module(n2o_nitrogen).
 -author('Maxim Sokhatsky').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 % Nitrogen pickle handler
 
@@ -69,7 +69,7 @@ render_actions(Actions) ->
 html_events({pickle,Source,Pickled,Linked}=Pickle, State) ->
     wf:info(?MODULE,"Pickle: ~tp",[Pickle]),
     Ev = wf:depickle(Pickled),
-    Result = case Ev of
+    _Result = case Ev of
          #ev{} -> render_ev(Ev,Source,Linked,State);
          CustomEnvelop -> wf:error("Only #ev{} events for now: ~p",[CustomEnvelop]) end,
     {io,render_actions(wf:actions()),<<>>}.

@@ -1,7 +1,7 @@
 -module(n2o_text).
 -author('Alexander Salnikov').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 info({text,Text}=Message, Req, State) when is_binary(Text) ->
     wf:info(?MODULE,"TEXT Message: ~p",[Message]),

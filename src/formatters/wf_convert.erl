@@ -1,6 +1,6 @@
 -module (wf_convert).
 -author('Maxim Sokhatsky').
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 -include_lib("n2o/include/wf.hrl").
 
 % WF to_atom to_list to_binary

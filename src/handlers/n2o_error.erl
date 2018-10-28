@@ -1,6 +1,6 @@
 -module(n2o_error).
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 -export(?FAULTER_API).
 
 % Plain Text Error Page Render

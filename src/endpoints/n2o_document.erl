@@ -2,7 +2,7 @@
 -description('N2O Server Pages HTTP endpoint handler').
 -author('Maxim Sokhatsky').
 -include_lib("n2o/include/wf.hrl").
--compile (export_all).
+-compile ([export_all, nowarn_export_all]).
 
 transition(Actions) ->
     receive

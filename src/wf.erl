@@ -3,7 +3,7 @@
 -author('Maxim Sokhatsky').
 -include_lib("n2o/include/wf.hrl").
 -include_lib("n2o/include/api.hrl").
--compile (export_all).
+-compile ([export_all, nowarn_export_all]).
 
 -define(ACTION_BASE(Module), ancestor=action, trigger, target, module=Module, actions, source=[]).
 -record(jq,      {?ACTION_BASE(action_jq), property, method, args=[], right, format="~s"}).
@@ -123,7 +123,7 @@ user() -> wf:session(<<"user">>).
 user(User) -> wf:session(<<"user">>,User).
 clear_user() -> wf:session(<<"user">>,undefined).
 logout() -> clear_user(), clear_session().
-invalidate_cache() -> ets:foldl(fun(X,A) -> wf:cache(element(1,X)) end, 0, caching).
+invalidate_cache() -> ets:foldl(fun(X,_A) -> wf:cache(element(1,X)) end, 0, caching).
 cache(Key, undefined) -> ets:delete(caching,Key);
 cache(Key, Value) -> ets:insert(caching,{Key,n2o_session:till(calendar:local_time(), n2o_session:ttl()),Value}), Value.
 cache(Key, Value, Till) -> ets:insert(caching,{Key,Till,Value}), Value.
@@ -248,7 +248,7 @@ format(Term)           -> wf_convert:format(Term).
 
 % These api are not really API
 
-unique_integer() -> try erlang:unique_integer() catch _:_ -> {MS,S,US} = erlang:now(), (MS*1000000+S)*1000000+US end.
+unique_integer() -> try erlang:unique_integer() catch _:_ -> {MS,S,US} = erlang:timestamp(), (MS*1000000+S)*1000000+US end.
 temp_id() -> "auto" ++ integer_to_list(unique_integer() rem 1000000).
 append(List, Key, Value) -> case Value of undefined -> List; _A -> [{Key, Value}|List] end.
 render(X) -> wf_render:render(X).

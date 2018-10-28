@@ -1,6 +1,6 @@
 -module(n2o_multipart).
 -export([init/3,handle/2,terminate/3]).
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 -define(MAX_FILE_SIZE_LIMIT, 900*1000*1000). % 300Kb
 -define(TMP_PATH,".").
 
@@ -11,7 +11,7 @@ init(_Type, Req, []) ->
 	{ok, Req, undefined}.
 
 handle(Req, State) ->
-    {Method, Req2} = cowboy_req:method(Req),
+    {_Method, Req2} = cowboy_req:method(Req),
     {B, ReqU} = case multipart(Req2, ?MODULE) of
                 {ok, ReqM} -> {<<"<h1>This is a response for POST</h1>">>, ReqM};
                 {rejected, file_size_limit, ReqM} -> {<<"POST: File Size Limit">>, ReqM} end,
@@ -68,12 +68,12 @@ stream_file(Req, IoDevice, FileSize, MaxFileSizeLimit) ->
 temp_filename() ->
     list_to_binary(filename:join([?TMP_PATH, atom_to_list(?MODULE) ++ integer_to_list(erlang:phash2(make_ref()))])).
 
-data_payload(FieldName, Body) ->
+data_payload(_FieldName, _Body) ->
     % error_logger:info_msg("DATA PAYLOAD {FieldName, Body} = {~p,~p}", [FieldName, Body]),
     ok.
 
-file_payload(FieldName, Filename, TempFilename, FileSize) ->
+file_payload(_FieldName, _Filename, TempFilename, _FileSize) ->
     NewFileName = <<"/tmp/upload.jpg">>,
     % error_logger:info_msg("FILE PAYLOAD: {~p, ~p, ~p}", [FieldName, Filename, TempFilename]),
-    {ok, BytesCopied} = file:copy(TempFilename, NewFileName),
+    {ok, _BytesCopied} = file:copy(TempFilename, NewFileName),
     ok.

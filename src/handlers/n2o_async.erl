@@ -4,7 +4,7 @@
 -behaviour(gen_server).
 -export([start_link/1]).
 -export([init/1,handle_call/3,handle_cast/2,handle_info/2,terminate/2,code_change/3]).
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 % n2o_async API
 
@@ -57,7 +57,7 @@ init_context(Req) ->
 % Generic Async Server
 
 init(#handler{module=Mod,class=Class,name=Name}=Handler) -> wf:cache({Class,Name},self(),infinity), Mod:proc(init,Handler).
-handle_call({get},_,#handler{module=Mod}=Async)   -> {reply,Async,Async};
+handle_call({get},_,#handler{module= _Mod}=Async)   -> {reply,Async,Async};
 handle_call(Message,_,#handler{module=Mod}=Async) -> Mod:proc(Message,Async).
 handle_cast(Message,  #handler{module=Mod}=Async) -> Mod:proc(Message,Async).
 handle_info(timeout,  #handler{module=Mod}=Async) -> Mod:proc(timeout,Async);
@@ -70,6 +70,6 @@ terminate(_Reason, #handler{name=Name,group=Group,class=Class}) ->
 
 % wf:async page workers
 
-proc(init,#handler{class=Class,name=Name,config={F,Req},state=Parent}=Async) -> put(parent,Parent), try F(init) catch _:_ -> skip end, init_context(Req), {ok,Async};
+proc(init,#handler{class= _Class,name= _Name,config={F, _Req},state=Parent}=Async) -> put(parent,Parent), try F(init) catch _:_ -> skip end, init_context(Req), {ok,Async};
 proc({parent,Parent},Async) -> {reply,put(parent,Parent),Async#handler{state=Parent}};
 proc(Message,#handler{config={F,Req}}=Async) -> {reply,F(Message),Async}.

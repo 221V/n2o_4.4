@@ -1,6 +1,6 @@
 -module(n2o_http).
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 %% ws.send(enc(tuple(atom('http'), bin(url), bin(method), bin(body), [])));
 

@@ -4,7 +4,7 @@
 -behaviour(cowboy_http_handler).
 -include_lib("n2o/include/wf.hrl").
 -export([init/3, handle/2, terminate/3]).
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 -record(state, {headers, body}).
 
 % Cowboy HTTP Handler

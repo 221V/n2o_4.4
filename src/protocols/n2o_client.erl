@@ -1,7 +1,7 @@
 -module(n2o_client).
 -author('Maxim Sokhatsky').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 info({client,Message}, Req, State) ->
     wf:info(?MODULE,"Client Message: ~p",[Message]),

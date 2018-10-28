@@ -2,7 +2,7 @@
 -author('Dmitry Krapivnoy').
 -include_lib("n2o/include/wf.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 finish(State,Ctx) -> {ok,State,Ctx}.
 init(State,Ctx) -> case wf:config(n2o,auto_session) of

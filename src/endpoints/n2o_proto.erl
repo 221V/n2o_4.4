@@ -2,7 +2,7 @@
 -description('N2O Protocol WebSocket endpoint handler').
 -author('Maxim Sokhatsky').
 -include_lib("n2o/include/wf.hrl").
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 formatter(O)-> case lists:keyfind(formatter,1,O) of {formatter,F} -> F; X -> X end.
 upack(D)    -> binary_to_term(D,[safe]).

@@ -1,6 +1,6 @@
 -module(n2o_relay).
 -description('N2O TCP relay endpoint handler').
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 
 connect(IP, PortNo) ->
     {ok, Socket} = gen_tcp:connect(IP, PortNo, [{active, false}, {packet, 2}]),

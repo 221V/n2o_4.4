@@ -1,7 +1,7 @@
 -module(n2o_static).
 -description('N2O Static Bridge to files in LING image, MAD bundle or OS').
 -author('Maxim Sokhatsky').
--compile(export_all).
+-compile([export_all, nowarn_export_all]).
 -include_lib("kernel/include/file.hrl").
 
 init(_, _, _) -> {upgrade, protocol, cowboy_rest}.
