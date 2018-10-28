@@ -72,4 +72,4 @@ terminate(_Reason, #handler{name=Name,group=Group,class=Class}) ->
 
 proc(init,#handler{class= _Class,name= _Name,config={F, Req},state=Parent}=Async) -> put(parent,Parent), try F(init) catch _:_ -> skip end, init_context(Req), {ok,Async};
 proc({parent,Parent},Async) -> {reply,put(parent,Parent),Async#handler{state=Parent}};
-proc(Message,#handler{config={F,Req}}=Async) -> {reply,F(Message),Async}.
+proc(Message,#handler{config={F,_Req}}=Async) -> {reply,F(Message),Async}.
