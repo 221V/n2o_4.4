@@ -34,7 +34,7 @@ xhr({reply,D,R,S})           -> {ok,reply(D,R,200),S}.
 % WebSocket
 
 websocket_info(I,R,S)        -> ws(n2o_proto:info(I,R,S)).
-websocket_handle(D,R,S)      -> ws(n2o_proto:stream(D,R,S));
+websocket_handle(D,R,S)      -> ws(n2o_proto:stream(D,R,S)).
 %websocket_handle(_,R,S)      -> {ok,R,S,hibernate}.
 websocket_init(T,R,O)        -> ws(n2o_proto:init(T,R,[{formatter,bert}|O],ws)).
 websocket_terminate(_,R,S)   -> n2o_proto:terminate(R,S).
