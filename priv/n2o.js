@@ -30,7 +30,10 @@ var $io = {}; $io.on = function onio(r, cb) { if (is(r,3,'io')) {
       eval(utf8_dec(r.v[1].v)); if (typeof cb == 'function') cb(r); return { status: "ok" }; }
     catch (e) { console.log(e); return { status: '' }; } } else return { status: '' }; }
 
-var $file = {}; $file.on = function onfile(r, cb) { if (is(r,10,'ftp')) {
+var $file = {}; $file.on = function onfile(r, cb) { 
+    //console.log('r ', r);
+    //console.log('is ', is(r,13,'ftp'));
+    if (is(r,13,'ftp')) {
     if (typeof cb == 'function') cb(r); return { status: "ok" }; } else return { status: ''}; }
 
 var $bin = {}; $bin.on = function onbin(r, cb) { if (is(r,2,'bin')) {

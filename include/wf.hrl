@@ -36,7 +36,7 @@
 
 % File Transfer Protocol
 
--record(ftp,     { id, sid, filename, meta, size, offset, block, data, status }).
+-record(ftp,     { id, sid, filename, meta, other1 = <<"">>, other2 = <<"">>, other3 = <<"">>, size, offset, block, data, status }).
 
 % HTTP
 

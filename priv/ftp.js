@@ -8,10 +8,14 @@ var ftp = {
         var item = {
             id:        performance.now().toString(),
             status:    'init',
+            status_block_id: ftp.status_block_id || 'ftp_status',
             autostart: ftp.autostart || false,
             name:      ftp.filename || file.name,
             sid:       ftp.sid || co(session),
             meta:      ftp.meta || bin(''),
+            other1:    ftp.other1 || bin(''),
+            other2:    ftp.other2 || bin(''),
+            other3:    ftp.other3 || bin(''),
             offset:    ftp.offset || 0,
             block:     1,
             total:     file.size,
@@ -34,11 +38,16 @@ var ftp = {
         ftp.start();
     },
     send:  function(item, data) {
+        //console.log('item ', item);
+        //console.log('data ', data);
         ws.send(enc(tuple(atom('ftp'),
             bin(item.id),
             bin(item.sid),
             bin(item.name),
             item.meta,
+            item.other1,
+            item.other2,
+            item.other3,
             number(item.total),
             number(item.offset),
             number(item.block || data.byteLength),
@@ -57,7 +66,8 @@ var ftp = {
 };
 
 $file.do = function(rsp) {
-    var offset = rsp.v[6].v, block = rsp.v[7].v, status = utf8_dec(rsp.v[9].v);
+    //console.log('rsp ', rsp);
+    var offset = rsp.v[9].v, block = rsp.v[10].v, status = utf8_dec(rsp.v[12].v);
     switch (status) {
         case 'init':
             var item = ftp.item(utf8_dec(rsp.v[1].v));
@@ -68,8 +78,8 @@ $file.do = function(rsp) {
             if(item.autostart) ftp.start(item.id);
             break;
         case 'send':
-            var x = qi('ftp_status'); if(x) x.innerHTML = offset;
             var item = ftp.item(utf8_dec(rsp.v[1].v));
+            var x = qi(item.status_block_id); if(x) x.innerHTML = offset;
             item.offset = offset;
             item.block = block;
             (block > 0 && ftp.active) ? ftp.send_slice(item) : ftp.stop(item.id)
