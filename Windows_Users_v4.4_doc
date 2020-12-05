@@ -1,0 +1,25 @@
+
+Documentation
+-------
+
+If you are new or you need to decide whether the N2O architecture
+and philosophy is a fit for your project
+
+* Official N2O Book [PDF](http://synrc.com/apps/n2o/doc/book.pdf)
+
+Windows Users
+-------------
+
+For windows you should install http://msys2.github.io and
+appropriative packages to use Synrc Stack:
+
+* pacman -S git
+
+Support
+-------
+* [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/synrc/n2o?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+* IRC Channel #n2o on FreeNode 24/7
+
+todo : ok doc in html book format
+
+

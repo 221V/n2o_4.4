@@ -1,6 +1,17 @@
 N2O: Erlang Application Server
 ==============================
 
+###### N2O Erlang Light  
+fork of original synrc/n2o v4.4  
+(and partial support features from next versions)  
+with focusing on ws for game development;  
+and the flexible system of templates and extensions  
+for public/common/open source/ community projects.  
+
+---
+updates are coming
+---
+
 [![Build Status](https://travis-ci.org/synrc/n2o.svg?branch=master)](https://travis-ci.org/synrc/n2o)
 
 Features
@@ -127,11 +138,10 @@ Tests
 Erlang version
 --------------
 
-We don't accept any reports of problems related to ESL or Ubuntu packaging.
-We only support Erlang built from sources, official Windows package,
-built with kerl or installed on Mac with homebrew. If you have any problems
-with your favourite Erlang package for your OS, please report issues
-to package maintainer.
+We don't accept any reports of problems related to ESL or Ubuntu/Debian packaging.  
+We don't accept any reports of problems related to Windows / Mac packaging.  
+We only support our own technical solutions, when there are agreements about it.  
+If you have any problems with your favourite Erlang package for your OS, please report issues to package maintainer.  
 
 Posting Issues on Github
 -------
@@ -146,37 +156,18 @@ issues to GitHub related to misuses of N2O, all such issues will be closed.
 
 Support
 -------
-* [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/synrc/n2o?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-* IRC Channel #n2o on FreeNode 24/7
+  .. loading, please wait
+  We'll be back in just a moment ..
 
-Documentation
+
+
+Credits - Contibutors - People
 -------
+  please look CREDITS_CONTRIBUTORS_PEOPLE
 
-If you are new or you need to decide whether the N2O architecture
-and philosophy is a fit for your project
 
-* Official N2O Book [PDF](http://synrc.com/apps/n2o/doc/book.pdf)
-
-Windows Users
--------------
-
-For windows you should install http://msys2.github.io and
-appropriative packages to use Synrc Stack:
-
-* pacman -S git
-
-Credits
+Free Open Source Cultural Works
 -------
+![Free Open Source Cultural Works](https://creativecommons.org/images/deed/FreeCulturalWorks_seal_x2.jpg)
 
-* Maxim Sokhatsky — core, shen, windows
-* Dmitry Bushmelev — endpoints, yaws, cowboy
-* Andrii Zadorozhnii — elements, actions, handlers
-* Vladimir Kirillov — mac, bsd, xen, linux support
-* Andrey Martemyanov — binary protocols
-* Oleksandr Nikitin — security
-* Anton Logvinenko — doc
-* Roman Shestakov — advanced elements, ct
-* Jesse Gumm — nitrogen, help
-* Rusty Klophaus — original author
 
-OM A HUM
